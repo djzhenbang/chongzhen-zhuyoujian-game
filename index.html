@@ -1,8 +1,16 @@
 <!DOCTYPE html>
+<!--
+  明末崇祯帝登基执政历史模拟系统
+  著作权声明：Copyright © 2026 【djzhenbang】
+  下载或转载请注明原作者及出处；禁止声明为他人作品。
+-->
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="【djzhenbang】">
+    <meta name="copyright" content="Copyright © 2026 【djzhenbang】">
+    <meta name="description" content="明末崇祯帝登基执政历史模拟系统 — 作者：【djzhenbang】">
     <title>明末崇祯帝登基执政历史模拟系统</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -25,6 +33,9 @@
             /* 界面字体（由设置面板写入，首帧与存档一致） */
             --ui-font-scale: 1;
             --ui-font-stack: "Microsoft YaHei", "PingFang SC", "SimSun", "STKaiti", "Noto Serif SC", serif;
+            /** 手机模式：边距与叙事区高度（随「参考屏宽」档位微调） */
+            --tm-mobile-pad: 12px;
+            --tm-story-panel-max-h: min(78vh, 620px);
         }
 
         html {
@@ -1277,6 +1288,119 @@
             font-size: 0.92em;
             line-height: 1.6;
         }
+
+        /* ========== 手机模式（设置项：界面布局）==========
+           tm-layout-mobile：紧凑单列 + 顶栏双列换行；data-tm-mobile-w 对应常见机型逻辑宽度微调。
+           tm-layout-prefer-desktop：在窄屏上仍坚持桌面版横向排版（整页可左右拖动）。 */
+        html.tm-layout-mobile[data-tm-mobile-w="360"] { --tm-mobile-pad: 6px; --tm-story-panel-max-h: min(74vh, 520px); }
+        html.tm-layout-mobile[data-tm-mobile-w="375"] { --tm-mobile-pad: 7px; --tm-story-panel-max-h: min(75vh, 540px); }
+        html.tm-layout-mobile[data-tm-mobile-w="390"] { --tm-mobile-pad: 8px; --tm-story-panel-max-h: min(76vh, 560px); }
+        html.tm-layout-mobile[data-tm-mobile-w="393"] { --tm-mobile-pad: 8px; --tm-story-panel-max-h: min(76vh, 560px); }
+        html.tm-layout-mobile[data-tm-mobile-w="414"] { --tm-mobile-pad: 9px; --tm-story-panel-max-h: min(77vh, 580px); }
+        html.tm-layout-mobile[data-tm-mobile-w="428"] { --tm-mobile-pad: 10px; --tm-story-panel-max-h: min(78vh, 600px); }
+        html.tm-layout-mobile[data-tm-mobile-w="480"] { --tm-mobile-pad: 11px; --tm-story-panel-max-h: min(78vh, 620px); }
+        html.tm-layout-mobile[data-tm-mobile-w="600"] { --tm-mobile-pad: 12px; --tm-story-panel-max-h: min(78vh, 640px); }
+        html.tm-layout-mobile[data-tm-mobile-w="768"] { --tm-mobile-pad: 14px; --tm-story-panel-max-h: min(72vh, 680px); }
+
+        html.tm-layout-mobile .container {
+            padding: var(--tm-mobile-pad);
+            max-width: 100%;
+        }
+        html.tm-layout-mobile .header {
+            padding: 18px var(--tm-mobile-pad);
+            margin-bottom: 16px;
+        }
+        html.tm-layout-mobile .header h1 {
+            font-size: clamp(1.05rem, 4.6vw, 1.55rem);
+            letter-spacing: 1px;
+        }
+        html.tm-layout-mobile .top-control-bar {
+            flex-wrap: wrap;
+            gap: 8px;
+            padding: 10px 6px;
+            justify-content: stretch;
+        }
+        html.tm-layout-mobile .top-control-bar .control-btn {
+            flex: 1 1 calc(50% - 5px);
+            min-width: calc(50% - 5px);
+            padding: 11px 6px;
+            font-size: clamp(0.65rem, 2.9vw, 0.82rem);
+            min-height: 44px;
+        }
+        html.tm-layout-mobile .game-area {
+            grid-template-columns: 1fr;
+            gap: 14px;
+            margin-bottom: 18px;
+        }
+        html.tm-layout-mobile .side-panel {
+            max-height: none;
+            padding: 14px calc(var(--tm-mobile-pad) + 4px);
+        }
+        html.tm-layout-mobile .story-panel {
+            min-height: 240px;
+            max-height: var(--tm-story-panel-max-h);
+            padding: 18px calc(var(--tm-mobile-pad) + 6px);
+        }
+        html.tm-layout-mobile .panel-title {
+            font-size: 1.12em;
+        }
+        html.tm-layout-mobile .map-layout {
+            flex-direction: column;
+        }
+        html.tm-layout-mobile .map-detail {
+            min-width: 0;
+        }
+        html.tm-layout-mobile #factoryModal .factory-modal-body {
+            flex-direction: column;
+        }
+        html.tm-layout-mobile #factoryModal .factory-modal-body > div:first-child {
+            flex: 1 1 auto;
+        }
+        html.tm-layout-mobile .intro-screen {
+            padding: 16px;
+            overflow-y: auto;
+            align-items: stretch;
+            justify-content: flex-start;
+        }
+        html.tm-layout-mobile .intro-title {
+            font-size: clamp(1.35rem, 6vw, 2rem);
+            letter-spacing: 1px;
+        }
+        html.tm-layout-mobile .intro-subtitle {
+            font-size: clamp(1rem, 4vw, 1.25rem);
+            margin-bottom: 22px;
+        }
+        html.tm-layout-mobile .start-buttons {
+            max-width: 100%;
+        }
+        html.tm-layout-mobile .start-btn {
+            padding: 16px 18px;
+            font-size: clamp(1rem, 4vw, 1.25rem);
+            width: 100%;
+        }
+        html.tm-layout-mobile #settingsPanel {
+            width: calc(100vw - 16px);
+            max-width: min(920px, 100%);
+            padding: 16px;
+            max-height: 90dvh;
+        }
+        html.tm-layout-mobile .save-picker-grid {
+            grid-template-columns: 1fr;
+        }
+
+        html.tm-layout-prefer-desktop {
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+        html.tm-layout-prefer-desktop body {
+            overflow-x: auto;
+        }
+        html.tm-layout-prefer-desktop #gameContainer.container {
+            min-width: 1180px;
+        }
+        html.tm-layout-prefer-desktop #introScreen.intro-screen {
+            min-width: 1180px;
+        }
     </style>
 </head>
 <body>
@@ -1284,6 +1408,7 @@
     <div class="intro-screen" id="introScreen">
         <h1 class="intro-title">明末崇祯帝登基执政历史模拟系统</h1>
         <p class="intro-subtitle">AI 执行终极规则 · 沉浸式历史推演</p>
+        <p style="margin-top:12px;font-size:0.88em;color:var(--text-muted);">作品 © 【djzhenbang】 · 转载请注明出处</p>
         
         <div class="start-buttons" style="margin-top: 10px; display: flex; flex-direction: column; gap: 14px;">
             <button class="start-btn" onclick="startGame()">开始新游戏</button>
@@ -1342,6 +1467,7 @@
     <div class="container" id="gameContainer" style="display: none;">
         <div class="header">
             <h1>📜 明末崇祯帝登基执政历史模拟系统</h1>
+            <p class="subtitle" style="margin-top:6px;font-size:0.95em;color:var(--text-muted);">作品 © 【djzhenbang】 · 转载请注明出处</p>
             <p class="subtitle"><span id="eraDisplay">天启七年</span> | <span id="quarterDisplay">第四季度</span> | 第<span id="turnDisplay">1</span>回合</p>
             <p id="extensionPlayHint" style="display:none;margin:4px 0 0;font-size:0.92em;color:#8B6914;" role="status" aria-live="polite"></p>
             <p id="decreePhaseHint" class="decree-phase-hint" role="status" aria-live="polite"></p>
@@ -1903,6 +2029,28 @@
                     <span id="uiInkDepthLabel" style="color:var(--text-primary); font-weight:600; min-width:10em;">墨色：50%（右深）</span>
                 </div>
                 <p style="margin:10px 0 0 0; color:var(--text-muted); font-size:0.85em;">朱钮、危险按钮上原为浅色（#FFF8F0）的字保持不清墨；深色调试区等浅色字也不随墨色改变。</p>
+
+                <label style="display:block; margin:18px 0 6px; color:var(--text-secondary); font-weight:600;">手机浏览器 · 界面布局</label>
+                <p style="margin:0 0 8px 0; color:var(--text-muted); font-size:0.88em; line-height:1.55;">「自动」在屏幕宽度约 ≤900px 时启用紧凑布局；「始终手机布局」在电脑上也单列与顶栏换行，便于预览手机效果；「始终桌面布局」在窄屏上保留桌面版横向排版（需左右拖动页面）。第二项为<strong>参考逻辑宽度</strong>，用于微调边距与叙事区高度，兼容常见机型。</p>
+                <label style="display:block; margin-bottom:6px; color:var(--text-secondary);">布局模式</label>
+                <select id="mobileLayoutModeSelect" onchange="onMobileLayoutFormInput()" style="width:100%; max-width:420px; padding:10px; background:#EFE2C9; border:2px solid #8B6B4C; color:var(--text-primary); border-radius:5px;">
+                    <option value="auto">自动（窄屏启用手机布局）</option>
+                    <option value="on">始终使用手机布局</option>
+                    <option value="off">始终使用桌面布局（窄屏可横向拖动）</option>
+                </select>
+                <label style="display:block; margin:14px 0 6px; color:var(--text-secondary);">参考逻辑宽度（机型）</label>
+                <select id="mobileWidthPresetSelect" onchange="onMobileLayoutFormInput()" style="width:100%; max-width:420px; padding:10px; background:#EFE2C9; border:2px solid #8B6B4C; color:var(--text-primary); border-radius:5px;">
+                    <option value="360">360 · iPhone SE / 极小屏</option>
+                    <option value="375">375 · iPhone 6/7/8 / 常见安卓</option>
+                    <option value="390">390 · iPhone 12–14 / 主流</option>
+                    <option value="393">393 · Pixel 系列</option>
+                    <option value="414">414 · iPhone Plus 级</option>
+                    <option value="428">428 · iPhone Pro Max 级</option>
+                    <option value="480">480 · 大屏安卓 / 小折叠外屏</option>
+                    <option value="600">600 · 大折叠外屏 / 小平板</option>
+                    <option value="768">768 · iPad 竖屏参考</option>
+                </select>
+
                 <p style="margin:12px 0 0 0; color:var(--text-muted); font-size:0.85em;">保存设置后与下方各链 API 配置一并写入本机浏览器存储。</p>
             </div>
         </details>
@@ -1924,7 +2072,7 @@
                 </select>
                 <input type="text" id="customModelInput_primary" placeholder="输入自定义模型名称" style="width: 100%; padding: 8px; background: #EFE2C9; border: 2px solid #8B6B4C; color: var(--text-primary); border-radius: 5px; margin-top: 8px; display: none;">
                 <label style="display: block; margin: 10px 0 5px; color: var(--text-secondary);">单次生成上限（max_tokens）:</label>
-                <input type="number" id="maxOutputTokens_primary" min="512" max="1048576" step="256" value="8192" style="width: 100%; padding: 10px; background: #EFE2C9; border: 2px solid #8B6B4C; color: var(--text-primary); border-radius: 5px;">
+                <input type="number" id="maxOutputTokens_primary" min="512" max="1048576" step="256" value="65536" style="width: 100%; padding: 10px; background: #EFE2C9; border: 2px solid #8B6B4C; color: var(--text-primary); border-radius: 5px;">
                 <label style="display:flex; align-items:center; gap:8px; margin-top:10px; color:var(--text-secondary); cursor:pointer;">
                     <input type="checkbox" id="thinkingModeEnabled_primary" style="transform: scale(1.05);">
                     思考模式（推理增强，仅支持 enable_thinking 的模型）
@@ -2201,7 +2349,7 @@
                 </select>
                 <input type="text" id="customModelInput_careerEpilogue" placeholder="输入自定义模型名称" style="width: 100%; padding: 8px; background: #EFE2C9; border: 2px solid #8B6B4C; color: var(--text-primary); border-radius: 5px; margin-top: 8px; display: none;">
                 <label style="display: block; margin: 10px 0 5px; color: var(--text-secondary);">单次生成上限（max_tokens）:</label>
-                <input type="number" id="maxOutputTokens_careerEpilogue" min="512" max="1048576" step="256" value="8192" style="width: 100%; padding: 10px; background: #EFE2C9; border: 2px solid #8B6B4C; color: var(--text-primary); border-radius: 5px;">
+                <input type="number" id="maxOutputTokens_careerEpilogue" min="512" max="1048576" step="256" value="65536" style="width: 100%; padding: 10px; background: #EFE2C9; border: 2px solid #8B6B4C; color: var(--text-primary); border-radius: 5px;">
                 <label style="display:flex; align-items:center; gap:8px; margin-top:10px; color:var(--text-secondary); cursor:pointer;">
                     <input type="checkbox" id="thinkingModeEnabled_careerEpilogue" style="transform: scale(1.05);">
                     思考模式（推理增强，仅支持 enable_thinking 的模型）
@@ -2566,6 +2714,10 @@
                         <label for="liubuFactionFilter" style="display:block; color:var(--text-secondary); font-size:0.85em; margin-bottom:4px;">党派筛选</label>
                         <select id="liubuFactionFilter" onchange="renderLiubuPanel()" style="width:100%; padding:8px; background:rgba(92,57,32,0.1); border:1px solid rgba(212,175,55,0.35); border-radius:8px; color:var(--text-primary);">
                             <option value="">全部党派</option>
+                            <option value="阉党">阉党</option>
+                            <option value="东林党">东林党</option>
+                            <option value="帝党">帝党</option>
+                            <option value="其他">其他</option>
                         </select>
                     </div>
                     <div style="min-width:min(100%, 200px);">
@@ -2649,6 +2801,10 @@
                             <label for="personnelPurgeFactionFilter" style="display:block; color:var(--text-secondary); font-size:0.85em; margin-bottom:4px;">党派筛选</label>
                             <select id="personnelPurgeFactionFilter" onchange="refreshPersonnelPurgeCandidateUi()" style="width:100%; padding:8px; background:rgba(92,57,32,0.1); border:1px solid rgba(212,175,55,0.35); border-radius:8px; color:var(--text-primary);">
                                 <option value="">全部党派</option>
+                                <option value="阉党">阉党</option>
+                                <option value="东林党">东林党</option>
+                                <option value="帝党">帝党</option>
+                                <option value="其他">其他</option>
                             </select>
                         </div>
                         <div style="min-width:min(100%, 200px);">
@@ -3192,14 +3348,14 @@
             'treasuryReconciliation'
         ];
         const PURPOSE_DEFAULT_MAX_TOKENS = Object.freeze({
-            primary: 8192,
+            primary: 65536,
             chief: 2800,
             ministerChat: 2800,
             secondPass: 3200,
             yyd: 2800,
             directSummon: 3200,
             handcraftResearch: 3200,
-            careerEpilogue: 8192,
+            careerEpilogue: 65536,
             memoryMaintenance: 3200,
             annexationConfirm: 1600,
             militaryCrisisReview: 2048,
@@ -3244,7 +3400,7 @@
                 endpoint: '',
                 apiKey: '',
                 modelName: 'qwen-plus',
-                maxOutputTokens: PURPOSE_DEFAULT_MAX_TOKENS[p] || 8192,
+                maxOutputTokens: PURPOSE_DEFAULT_MAX_TOKENS[p] || 65536,
                 customModelName: '',
                 enableThinkingMode: false
             };
@@ -3255,12 +3411,14 @@
                 apiEndpoint: '',
                 apiKey: '',
                 modelName: 'qwen-plus',
-                maxOutputTokens: 8192,
+                maxOutputTokens: 65536,
                 enableThinkingMode: false,
                 ui: {
                     fontPreset: 'han_serif',
                     fontScale: 1,
-                    inkDepth: 0.5
+                    inkDepth: 0.5,
+                    mobileLayout: 'auto',
+                    mobileWidthPreset: '390'
                 }
             };
             AI_PURPOSES.forEach(p => { o[p] = createDefaultPurposeApiConfig(p); });
@@ -3268,6 +3426,8 @@
         }
 
         const UI_FONT_PRESET_IDS = Object.freeze(['default', 'han_serif', 'xiaowei', 'tablet']);
+        const MOBILE_LAYOUT_MODE_IDS = Object.freeze(['auto', 'on', 'off']);
+        const MOBILE_WIDTH_PRESET_IDS = Object.freeze(['360', '375', '390', '393', '414', '428', '480', '600', '768']);
 
         function getUiFontStackForPreset(preset) {
             switch (preset) {
@@ -3403,6 +3563,74 @@
             applyUiFontSettingsFromState({ fontPreset, fontScale, inkDepth });
         }
 
+        function readMobileLayoutFromForm() {
+            const modeEl = document.getElementById('mobileLayoutModeSelect');
+            const wEl = document.getElementById('mobileWidthPresetSelect');
+            let mode = 'auto';
+            if (modeEl && MOBILE_LAYOUT_MODE_IDS.includes(modeEl.value)) mode = modeEl.value;
+            else if (settings.ui && MOBILE_LAYOUT_MODE_IDS.includes(settings.ui.mobileLayout)) mode = settings.ui.mobileLayout;
+            let preset = '390';
+            if (wEl && MOBILE_WIDTH_PRESET_IDS.includes(wEl.value)) preset = wEl.value;
+            else if (settings.ui && MOBILE_WIDTH_PRESET_IDS.includes(settings.ui.mobileWidthPreset)) preset = settings.ui.mobileWidthPreset;
+            return { mobileLayout: mode, mobileWidthPreset: preset };
+        }
+
+        /**
+         * 根据 settings.ui 与可选预览片段切换 html 布局类（与字体相同：未保存前可用表单预览）。
+         */
+        function applyMobileLayoutSettingsFromState(uiPartial) {
+            const base = settings.ui && typeof settings.ui === 'object' ? settings.ui : {};
+            const merged = { ...base, ...(uiPartial || {}) };
+            const mode = MOBILE_LAYOUT_MODE_IDS.includes(merged.mobileLayout) ? merged.mobileLayout : 'auto';
+            const preset = MOBILE_WIDTH_PRESET_IDS.includes(merged.mobileWidthPreset) ? merged.mobileWidthPreset : '390';
+            const html = document.documentElement;
+            html.classList.remove('tm-layout-mobile', 'tm-layout-prefer-desktop');
+            html.removeAttribute('data-tm-mobile-w');
+
+            const mqNarrow = typeof window.matchMedia === 'function'
+                ? window.matchMedia('(max-width: 900px)').matches
+                : false;
+
+            let useMobileLayout = false;
+            if (mode === 'on') useMobileLayout = true;
+            else if (mode === 'auto') useMobileLayout = mqNarrow;
+            else useMobileLayout = false;
+
+            if (useMobileLayout) {
+                html.classList.add('tm-layout-mobile');
+                html.setAttribute('data-tm-mobile-w', preset);
+            } else if (mode === 'off' && mqNarrow) {
+                html.classList.add('tm-layout-prefer-desktop');
+            }
+        }
+
+        function onMobileLayoutFormInput() {
+            applyMobileLayoutSettingsFromState(readMobileLayoutFromForm());
+        }
+
+        function syncMobileLayoutFormFromState() {
+            const ui = settings.ui && typeof settings.ui === 'object' ? settings.ui : {};
+            const mode = MOBILE_LAYOUT_MODE_IDS.includes(ui.mobileLayout) ? ui.mobileLayout : 'auto';
+            const preset = MOBILE_WIDTH_PRESET_IDS.includes(ui.mobileWidthPreset) ? ui.mobileWidthPreset : '390';
+            const modeEl = document.getElementById('mobileLayoutModeSelect');
+            const wEl = document.getElementById('mobileWidthPresetSelect');
+            if (modeEl) modeEl.value = mode;
+            if (wEl) wEl.value = preset;
+        }
+
+        let __tmMobileLayoutResizeHooked = false;
+        function ensureMobileLayoutAutoResizeHook() {
+            if (__tmMobileLayoutResizeHooked) return;
+            __tmMobileLayoutResizeHooked = true;
+            window.addEventListener('resize', () => {
+                try {
+                    const ui = settings.ui && typeof settings.ui === 'object' ? settings.ui : {};
+                    if (ui.mobileLayout !== 'auto') return;
+                    applyMobileLayoutSettingsFromState();
+                } catch (_) {}
+            });
+        }
+
         let settings = buildDefaultSettingsObject();
 
         /** 系统兜底上限（仅未知模型使用；真实请求以模型上限为准） */
@@ -3414,10 +3642,10 @@
          * 预设模型在各自 API 下单次 completion 的推荐上限（超过者钳到此值）
          */
         const MODEL_MAX_OUTPUT_CAPS = {
-            'qwen-plus': 8192,
+            'qwen-plus': 65536,
             'qwen3.5-plus': 65536,
             'qwen3.6-plus': 65536,
-            'deepseek-v4-flash': 1048576,
+            'deepseek-v4-flash': 393216,
             'custom': ABSOLUTE_MAX_OUTPUT_TOKENS
         };
 
@@ -3494,7 +3722,7 @@
             if (!Number.isFinite(maxOutputTokens)) {
                 maxOutputTokens = Number(settings.maxOutputTokens);
             }
-            if (!Number.isFinite(maxOutputTokens)) maxOutputTokens = PURPOSE_DEFAULT_MAX_TOKENS[p] || 8192;
+            if (!Number.isFinite(maxOutputTokens)) maxOutputTokens = PURPOSE_DEFAULT_MAX_TOKENS[p] || 65536;
 
             return {
                 purpose: p,
@@ -3525,7 +3753,7 @@
                 return MODEL_MAX_OUTPUT_CAPS.custom;
             }
             if (MODEL_MAX_OUTPUT_CAPS[m] != null) return MODEL_MAX_OUTPUT_CAPS[m];
-            return 8192;
+            return 65536;
         }
 
         /** 当前选用模型的单次 completion 上限：选「自定义」时按该用途自定义模型 id 匹配表，否则用下拉 value */
@@ -3538,7 +3766,7 @@
 
         function getRecommendedMaxOutputTokensByModel(modelId, purpose) {
             const cap = getModelMaxOutputCap(modelId, purpose);
-            return Math.max(512, Number(cap) || 8192);
+            return Math.max(512, Number(cap) || 65536);
         }
 
         /** 发往 API 的模型名：选「自定义」时用该用途输入框内名称 */
@@ -4697,7 +4925,6 @@
                         name: '白杆军',
                         subtitle: '秦良玉部·川黔山地劲旅',
                         count: 8000,
-                        basePower: 88,
                         baseMorale: 78,
                         training: 80,
                         wageOwedSilver: 0,
@@ -4709,7 +4936,6 @@
                         name: '东江镇·皮岛军',
                         subtitle: '毛文龙部·辽海游击牵制',
                         count: 12000,
-                        basePower: 82,
                         baseMorale: 72,
                         training: 74,
                         wageOwedSilver: 280000,
@@ -7008,6 +7234,29 @@
             }).join('');
         }
 
+        /** 界面党派筛选固定四类 + 全部（名册「党派」原文不改，仅筛选时归入这四档） */
+        const FACTION_FILTER_BUCKET_IDS = Object.freeze(['阉党', '东林党', '帝党', '其他']);
+        function classifyFactionForFilter(rawFaction) {
+            const f = String(rawFaction || '').trim();
+            if (f === '东林党') return '东林党';
+            if (f === '阉党') return '阉党';
+            if (f === '帝党' || f.includes('帝党')) return '帝党';
+            return '其他';
+        }
+        function rebuildStandardFactionFilterSelect(selectEl, preferredValue) {
+            if (!selectEl) return;
+            const keep = String(preferredValue != null ? preferredValue : selectEl.value || '').trim();
+            selectEl.innerHTML = '<option value="">全部党派</option>';
+            FACTION_FILTER_BUCKET_IDS.forEach(id => {
+                const o = document.createElement('option');
+                o.value = id;
+                o.textContent = id;
+                selectEl.appendChild(o);
+            });
+            const ok = ['', ...FACTION_FILTER_BUCKET_IDS];
+            selectEl.value = ok.includes(keep) ? keep : '';
+        }
+
         /** 人事罢免页：按检索/党派/排序填充「仅姓名」下拉链（与军事主帅任命样式一致） */
         function refreshPersonnelPurgeCandidateUi() {
             const sel = document.getElementById('personnelPurgeNameSelect');
@@ -7024,20 +7273,9 @@
                 })
                 .map(n => ({ name: n, m: mins[n] }));
 
-            const factions = [...new Set(livingEntries.map(e => String(e.m.faction || '').trim()).filter(Boolean))]
-                .sort((a, b) => a.localeCompare(b, 'zh-CN'));
-
             if (facSel) {
                 const keepFac = String(facSel.value || '').trim();
-                facSel.innerHTML = '<option value="">全部党派</option>';
-                factions.forEach(f => {
-                    const o = document.createElement('option');
-                    o.value = f;
-                    o.textContent = f;
-                    facSel.appendChild(o);
-                });
-                if (keepFac && factions.includes(keepFac)) facSel.value = keepFac;
-                else facSel.value = '';
+                rebuildStandardFactionFilterSelect(facSel, keepFac);
             }
 
             const keyword = (searchEl ? searchEl.value : '')?.trim() || '';
@@ -7048,7 +7286,7 @@
             names = names.filter(n => {
                 const m = mins[n];
                 if (!m) return false;
-                if (factionFilter && String(m.faction || '').trim() !== factionFilter) return false;
+                if (factionFilter && classifyFactionForFilter(m.faction) !== factionFilter) return false;
                 if (!keyword) return true;
                 return n.includes(keyword) || String(m.faction || '').includes(keyword);
             });
@@ -7274,6 +7512,8 @@
             if (typeof gameState.liubu.uiSearch !== 'string') gameState.liubu.uiSearch = '';
             if (typeof gameState.liubu.uiFactionFilter !== 'string') gameState.liubu.uiFactionFilter = '';
             if (!gameState.liubu.uiSortBy) gameState.liubu.uiSortBy = 'name_asc';
+            const _liubuFacOk = new Set(['', ...FACTION_FILTER_BUCKET_IDS]);
+            if (!_liubuFacOk.has(String(gameState.liubu.uiFactionFilter || '').trim())) gameState.liubu.uiFactionFilter = '';
         }
 
         function removeMinisterFromLiubuState(removedName) {
@@ -7310,7 +7550,7 @@
             names = names.filter(n => {
                 const m = mins[n];
                 if (!m) return false;
-                if (factionFilter && String(m.faction || '').trim() !== factionFilter) return false;
+                if (factionFilter && classifyFactionForFilter(m.faction) !== factionFilter) return false;
                 if (!keyword) return true;
                 return n.includes(keyword) || String(m.faction || '').includes(keyword);
             });
@@ -7349,20 +7589,9 @@
             if (sortEl) gameState.liubu.uiSortBy = String(sortEl.value || 'name_asc');
 
             const mins = gameState.council?.ministers || {};
-            const factions = [...new Set(
-                Object.keys(mins).filter(n => mins[n] && !mins[n].dead).map(n => String(mins[n].faction || '').trim()).filter(Boolean)
-            )].sort((a, b) => a.localeCompare(b, 'zh-CN'));
             if (facSel) {
                 const keep = String(facSel.value || '').trim();
-                facSel.innerHTML = '<option value="">全部党派</option>';
-                factions.forEach(f => {
-                    const o = document.createElement('option');
-                    o.value = f;
-                    o.textContent = f;
-                    facSel.appendChild(o);
-                });
-                if (keep && factions.includes(keep)) facSel.value = keep;
-                else facSel.value = '';
+                rebuildStandardFactionFilterSelect(facSel, keep);
                 gameState.liubu.uiFactionFilter = facSel.value || '';
             }
 
@@ -7533,11 +7762,8 @@
             const so = document.getElementById('liubuSortBy');
             if (s) s.value = gameState.liubu.uiSearch || '';
             if (so) so.value = String(gameState.liubu.uiSortBy || 'name_asc');
+            if (f) f.value = String(gameState.liubu.uiFactionFilter || '').trim();
             renderLiubuPanel();
-            if (f && gameState.liubu.uiFactionFilter) {
-                const opt = [...f.options].some(o => o.value === gameState.liubu.uiFactionFilter);
-                if (opt) f.value = gameState.liubu.uiFactionFilter;
-            }
         }
 
         /**
@@ -12629,7 +12855,6 @@ ${draftBlock}
                     name: '预备役',
                     subtitle: '新征兵员暂存（不可作战）',
                     count: Math.max(0, Math.floor(Number(gameState.army.unassignedTroops) || 0)),
-                    basePower: 0,
                     baseMorale: 35,
                     training: 20,
                     wageOwedSilver: 0,
@@ -12645,7 +12870,6 @@ ${draftBlock}
                 reserve.name = reserve.name || '预备役';
                 reserve.subtitle = reserve.subtitle || '新征兵员暂存（不可作战）';
                 reserve.count = Math.max(0, Math.floor(Number(reserve.count) || 0));
-                reserve.basePower = 0;
                 reserve.baseMorale = Math.max(20, Math.min(60, Number(reserve.baseMorale) || 35));
                 reserve.training = Math.max(0, Math.min(100, Number(reserve.training) || 20));
                 if (typeof reserve.wageOwedSilver !== 'number') reserve.wageOwedSilver = 0;
@@ -12772,7 +12996,6 @@ ${draftBlock}
             const addProv = (provName, cnt, wShare, ppShare, r) => {
                 const stab = r ? (Number(r.stability) || 50) : 50;
                 const armIdx = r ? (Number(r.army) || 0) : 0;
-                const bp = Math.max(22, Math.min(48, 28 + Math.floor(stab / 15)));
                 const bm = Math.max(25, Math.min(52, 38 + Math.floor((stab - 50) / 8)));
                 const tr = Math.max(12, Math.min(52, Math.round(baseTrain * (0.75 + stab / 200))));
                 const subtitle = r && r.capital
@@ -12782,7 +13005,6 @@ ${draftBlock}
                     name: '驻防·' + provName,
                     subtitle,
                     count: Math.max(0, Math.floor(cnt)),
-                    basePower: bp,
                     baseMorale: bm,
                     training: tr,
                     wageOwedSilver: Math.floor(Number(wShare) || 0),
@@ -12839,7 +13061,6 @@ ${draftBlock}
                     name: u.name || ('驻防·' + provName),
                     subtitle: u.subtitle || ((r.capital ? '治所' + r.capital + ' · ' : '') + '驻军指数' + armIdx + '%'),
                     count: Math.max(0, Number(u.count) || 0),
-                    basePower: u.basePower != null ? Math.max(0, Math.min(100, Number(u.basePower))) : 35,
                     baseMorale: u.baseMorale != null ? Math.max(0, Math.min(100, Number(u.baseMorale))) : 40,
                     training: Math.max(0, Math.min(100, Number(u.training) || 28)),
                     wageOwedSilver: Number(u.wageOwedSilver) || 0,
@@ -12996,7 +13217,6 @@ ${draftBlock}
                     name: '东江镇·皮岛军',
                     subtitle: '毛文龙部·辽海游击牵制',
                     count: 12000,
-                    basePower: 82,
                     baseMorale: 72,
                     training: 74,
                     wageOwedSilver: 280000,
@@ -13022,11 +13242,11 @@ ${draftBlock}
 
         function getStandardArmyStaticMeta() {
             return {
-                guanNing: { name: '关宁铁骑', subtitle: '辽东精锐', countField: 'guanNingIronCavalry', basePower: 92, baseMorale: 75 },
-                tianXiong: { name: '天雄军', subtitle: '河北劲旅', countField: 'tianXiongArmy', basePower: 88, baseMorale: 80 },
-                qin: { name: '秦军', subtitle: '西北悍卒', countField: 'qinArmy', basePower: 85, baseMorale: 70 },
-                jingYing: { name: '京营禁军', subtitle: '京城守备', countField: 'jingYing', basePower: 65, baseMorale: 60 },
-                border: { name: '九边军', subtitle: '分散驻守', countField: 'borderTroops', basePower: 60, baseMorale: 45 }
+                guanNing: { name: '关宁铁骑', subtitle: '辽东精锐', countField: 'guanNingIronCavalry', baseMorale: 75 },
+                tianXiong: { name: '天雄军', subtitle: '河北劲旅', countField: 'tianXiongArmy', baseMorale: 80 },
+                qin: { name: '秦军', subtitle: '西北悍卒', countField: 'qinArmy', baseMorale: 70 },
+                jingYing: { name: '京营禁军', subtitle: '京城守备', countField: 'jingYing', baseMorale: 60 },
+                border: { name: '九边军', subtitle: '分散驻守', countField: 'borderTroops', baseMorale: 45 }
             };
         }
 
@@ -13093,7 +13313,6 @@ ${draftBlock}
                     name: sm.name,
                     subtitle: sm.subtitle,
                     count: Number(gameState.army[sm.countField] || 0),
-                    basePower: sm.basePower,
                     baseMorale: sm.baseMorale,
                     training: Math.max(0, Math.min(100, Number(prof.training ?? 55))),
                     wageOwedSilver: Math.max(0, Number(prof.wageOwedSilver || 0)),
@@ -13113,7 +13332,6 @@ ${draftBlock}
                     name: u.name || u.id,
                     subtitle: u.subtitle || '',
                     count: Math.max(0, Number(u.count || 0)),
-                    basePower: Math.max(0, Math.min(100, Number(u.basePower ?? 55))),
                     baseMorale: Math.max(0, Math.min(100, Number(u.baseMorale ?? 50))),
                     training: Math.max(0, Math.min(100, Number(u.training ?? 50))),
                     wageOwedSilver: Math.max(0, Number(u.wageOwedSilver || 0)),
@@ -13135,14 +13353,25 @@ ${draftBlock}
             return rows.reduce((sumOwed, row) => sumOwed + Math.max(0, Number(row?.wageOwedSilver || 0)), 0);
         }
 
+        /**
+         * 全军共用战力底盘（不再使用名册 basePower）：训练为主帅组织度，主帅军事加成战功与装备另计。
+         * 兵力不足 1500 时仅对折在这里返回的 organizationPower（见 computeArmyRowCombatStats）。
+         */
+        function computeUnifiedOrganizationCombatPower(row, effTrain) {
+            const train = Math.max(0, Math.min(100, Number(effTrain)));
+            return 22 + Math.min(60, Math.round(train * 0.58));
+        }
+
         function computeArmyRowCombatStats(row, equipBySlice, leadershipBonus) {
             const slice = (equipBySlice && typeof equipBySlice === 'object') ? equipBySlice : {};
             const lead = leadershipBonus && typeof leadershipBonus === 'object'
                 ? leadershipBonus
                 : { power: 0, morale: 0, trainingBoost: 0 };
             const effTrain = Math.max(0, Math.min(100, Number(row.training) + (lead.trainingBoost || 0)));
-            let power = row.basePower;
-            let morale = row.baseMorale;
+            const uid = String(row.unitKey || '').trim();
+            let power = computeUnifiedOrganizationCombatPower(row, effTrain);
+            let morale = Math.max(0, Math.min(100, Number(row.baseMorale)));
+            if (!Number.isFinite(morale)) morale = 50;
             const heads = Math.max(0, Number(row.count) || 0);
             if (heads < 1500) {
                 const sc = Math.max(0.38, Math.min(1, heads / 1500));
@@ -13153,6 +13382,10 @@ ${draftBlock}
             morale += rosterMorale;
             const rosterExp = Math.max(0, Math.min(ARMY_BATTLE_EXPERIENCE_CAP, Number(row.battleExperience || 0)));
             power += Math.min(12, Math.floor(rosterExp / 8));
+            if (typeof getArmyGeneralMilitaryAbility === 'function') {
+                const gen = getArmyGeneralMilitaryAbility(uid);
+                power += Math.min(10, Math.floor(Math.max(0, gen - 40) / 6));
+            }
             Object.entries(slice).forEach(([eqType, raw]) => {
                 const cnt = Number(raw) || 0;
                 if (cnt <= 0) return;
@@ -13166,8 +13399,7 @@ ${draftBlock}
                     morale += Math.floor(cnt * (fallback.moraleBoostPerEquip || 1 / 800));
                 }
             });
-            const trainBonus = Math.floor(Math.max(0, effTrain - 50) / 5);
-            let rawPower = Math.min(100, power + trainBonus);
+            let rawPower = Math.min(100, power);
             let moraleEff = Math.min(100, morale + Math.floor(Math.max(0, effTrain - 55) / 8));
             if (Number(row.wageOwedSilver || 0) > 0) {
                 const debt = Math.max(0, Number(row.wageOwedSilver || 0));
@@ -13378,14 +13610,13 @@ ${draftBlock}
                     if (!id) id = resolveArmyUnitIdAllowNew(idRaw);
                     if (!id || STANDARD_ARMY_IDS.includes(id)) return;
                     const existing = gameState.army.customUnits.find(u => u.id === id);
-                    const entry = existing || { id, name: item.name || id, subtitle: item.subtitle || '', count: 0, basePower: 55, baseMorale: 50, training: 45, wageOwedSilver: 0, wagePrepaidSilver: 0, moraleBonus: 0, battleExperience: 0, garrisonBase: '未知', currentRegion: '未知' };
+                    const entry = existing || { id, name: item.name || id, subtitle: item.subtitle || '', count: 0, baseMorale: 50, training: 45, wageOwedSilver: 0, wagePrepaidSilver: 0, moraleBonus: 0, battleExperience: 0, garrisonBase: '未知', currentRegion: '未知' };
                     if (typeof item.name === 'string' && item.name.trim()) entry.name = item.name.trim();
                     if (typeof item.subtitle === 'string') entry.subtitle = item.subtitle;
                     if (!blockHeadcountChangeByDecree) {
                         if (typeof item.count === 'number' && item.count >= 0) entry.count = item.count;
                         if (typeof item.countDelta === 'number') entry.count = Math.max(0, (entry.count || 0) + item.countDelta);
                     }
-                    if (typeof item.basePower === 'number') entry.basePower = item.basePower;
                     if (typeof item.baseMorale === 'number') entry.baseMorale = item.baseMorale;
                     if (typeof item.training === 'number') entry.training = Math.max(0, Math.min(100, item.training));
                     if (typeof item.trainingDelta === 'number') {
@@ -13437,7 +13668,7 @@ ${draftBlock}
                 if (!gameState.army.provincialUnits) gameState.army.provincialUnits = {};
                 const applyProvincialGarrisonOne = (provName, item) => {
                     const p = (gameState.army.provincialUnits[provName] = gameState.army.provincialUnits[provName] || {
-                        name: '驻防·' + provName, subtitle: '', count: 0, basePower: 35, baseMorale: 40, training: 28,
+                        name: '驻防·' + provName, subtitle: '', count: 0, baseMorale: 40, training: 28,
                         wageOwedSilver: 0, wagePrepaidSilver: 0, moraleBonus: 0, battleExperience: 0, unitKey: GARRISON_UNIT_PREFIX + provName
                     });
                     if (!blockHeadcountChangeByDecree) {
@@ -13446,7 +13677,6 @@ ${draftBlock}
                         }
                         if (typeof item.setCount === 'number') p.count = Math.max(0, Math.floor(item.setCount));
                     }
-                    if (typeof item.basePower === 'number') p.basePower = Math.max(0, Math.min(100, item.basePower));
                     if (typeof item.baseMorale === 'number') p.baseMorale = Math.max(0, Math.min(100, item.baseMorale));
                     if (typeof item.trainingDelta === 'number') {
                         p.training = Math.max(0, Math.min(100, (Number(p.training) || 28) + item.trainingDelta));
@@ -13601,7 +13831,6 @@ ${draftBlock}
                         if (typeof item.countDelta === 'number') cu.count = Math.max(0, (cu.count || 0) + item.countDelta);
                         if (typeof item.setCount === 'number') cu.count = Math.max(0, item.setCount);
                     }
-                    if (typeof item.basePower === 'number') cu.basePower = item.basePower;
                     if (typeof item.baseMorale === 'number') cu.baseMorale = item.baseMorale;
                     if (typeof item.trainingDelta === 'number') {
                         cu.training = Math.max(0, Math.min(100, (cu.training || 50) + item.trainingDelta));
@@ -30941,7 +31170,7 @@ ${armyUnitIdReferenceBlock}
   - 若叙事出现“补发欠饷”“清偿军饷”，在 militaryUpdates 中设置 "clearAllArmyWageArrears": true。
   - 若交办某人练兵，可在 unitUpdates 中加入 trainingDelta。
   - **militaryUpdates.unitUpdates[].unitId（强制）**：必须严格使用上文【当前部队清单·强制对照表】中的 unitId 值。严禁使用中文名称、严禁自创ID。示例：要给关宁铁骑增加训练度，必须写 "unitId": "guanNing"，而不能写 "unitId": "关宁铁骑" 或 "unitId": "guanning_cavalry"。
-  - **registerUnits**：仅用于创建**全新**的、清单中**不存在**的部队。新建部队的 unitId 建议使用拼音/英文+序号（如 "shenji_air_1"）。绝不可与上表中已有的 unitId 重复。每条对象必须包含 unitId (必填，唯一标识)、name (必填，中文名称)、count (必填，人数) 等字段。创建后若要在同回合继续更新该部队，后续所有 unitId 仍必须与 registerUnits 中刚创建的 unitId 完全一致。
+  - **registerUnits**：仅用于创建**全新**的、清单中**不存在**的部队。新建部队的 unitId 建议使用拼音/英文+序号（如 "shenji_air_1"）。绝不可与上表中已有的 unitId 重复。每条对象必须包含 unitId (必填，唯一标识)、name (必填，中文名称)、count (必填，人数) 等字段；名册战力由训练、士气册、装备、主帅军事与战功历练统一折算，**无需也不生效 basePower 字段**。创建后若要在同回合继续更新该部队，后续所有 unitId 仍必须与 registerUnits 中刚创建的 unitId 完全一致。
   - **unitMovements**：用于记录部队移防。每条对象至少包含 unitId、toLocation（省域名）与 reason。unitId 仍必须来自【当前部队清单·强制对照表】；toLocation 必须使用地图已有省域名（如“辽东”“北直隶”“陕西”）。
   - **battleResolutions**：当回合发生战斗并结束后，必须填写此数组。每项至少包含 unitId（必填，且必须来自【当前部队清单·强制对照表】）、casualtyRate（必填，0.0~1.0）、moraleDelta（必填）、reason（必填）；可选 equipmentLossRateByType（如 { "鸟铳": 0.15, "虎蹲炮": 0.1 }）与 trainingDelta。参考区间：大胜 casualtyRate 0.05~0.15 且 moraleDelta +3~+8；小胜/僵持 0.15~0.35 且 moraleDelta -3~+3；失利 0.30~0.60 且 moraleDelta -5~-15；溃败 0.50+ 且 moraleDelta -10~-25。
   - **combatConsumption**：凡作战中明确消耗了弹药/军械，必须填写此数组。每项包含 unitId（必填）与“消耗”数组（必填，元素形如 { "equipmentType": "火箭推进榴弹", "amount": 50 }）。若你使用英文键，也可写 consumption（同结构）；unitId 仍必须来自【当前部队清单·强制对照表】。
@@ -36118,10 +36347,14 @@ ${armyUnitIdReferenceBlock}
 
             const loadedUi = loaded.ui && typeof loaded.ui === 'object' ? loaded.ui : {};
             const fp = String(loadedUi.fontPreset || '').trim();
+            const ml = String(loadedUi.mobileLayout || '').trim();
+            const mwp = String(loadedUi.mobileWidthPreset || '').trim();
             normalized.ui = {
                 fontPreset: UI_FONT_PRESET_IDS.includes(fp) ? fp : 'han_serif',
                 fontScale: clampUiFontScale(loadedUi.fontScale != null ? loadedUi.fontScale : 1),
-                inkDepth: clampUiInkDepth(loadedUi.inkDepth != null ? Number(loadedUi.inkDepth) : 0.5)
+                inkDepth: clampUiInkDepth(loadedUi.inkDepth != null ? Number(loadedUi.inkDepth) : 0.5),
+                mobileLayout: MOBILE_LAYOUT_MODE_IDS.includes(ml) ? ml : 'auto',
+                mobileWidthPreset: MOBILE_WIDTH_PRESET_IDS.includes(mwp) ? mwp : '390'
             };
             return normalized;
         }
@@ -36176,12 +36409,14 @@ ${armyUnitIdReferenceBlock}
 
             if (!isOpening) {
                 applyUiFontSettingsFromState();
+                applyMobileLayoutSettingsFromState();
                 return;
             }
 
             // 打开时加载当前设置到表单
             if (panel.style.display === 'block') {
                 syncUiFontFormFromState();
+                syncMobileLayoutFormFromState();
                 populateApplyPurposeFromSelects();
                 AI_PURPOSES.forEach(p => {
                     const cfg = resolvePurposeApiConfig(p, { useFallbackToPrimary: false });
@@ -36257,12 +36492,16 @@ ${armyUnitIdReferenceBlock}
             );
 
             const uiFromForm = readUiFontFromForm();
+            const mlFromForm = readMobileLayoutFromForm();
             settings.ui = {
                 fontPreset: uiFromForm.fontPreset,
                 fontScale: uiFromForm.fontScale,
-                inkDepth: uiFromForm.inkDepth
+                inkDepth: uiFromForm.inkDepth,
+                mobileLayout: mlFromForm.mobileLayout,
+                mobileWidthPreset: mlFromForm.mobileWidthPreset
             };
             applyUiFontSettingsFromState(settings.ui);
+            applyMobileLayoutSettingsFromState(settings.ui);
             
             localStorage.setItem('chongzhen_settings', JSON.stringify(settings));
             alert('设置已保存！');
@@ -36272,6 +36511,7 @@ ${armyUnitIdReferenceBlock}
         function closeSettings() {
             document.getElementById('settingsPanel').style.display = 'none';
             applyUiFontSettingsFromState();
+            applyMobileLayoutSettingsFromState();
         }
         
         function loadSettings() {
@@ -36295,7 +36535,10 @@ ${armyUnitIdReferenceBlock}
             if (typeof resetModalOverlaysOnBoot === 'function') resetModalOverlaysOnBoot();
             loadSettings();
             applyUiFontSettingsFromState();
+            applyMobileLayoutSettingsFromState();
             syncUiFontFormFromState();
+            syncMobileLayoutFormFromState();
+            ensureMobileLayoutAutoResizeHook();
             if (typeof initStoryPanelScrollBehavior === 'function') initStoryPanelScrollBehavior();
             console.log('明末崇祯帝登基执政历史模拟系统已加载');
             console.log('Primary API Endpoint:', settings.primary?.endpoint || '未配置');
